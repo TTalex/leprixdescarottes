@@ -46,6 +46,7 @@ type Stat = {
       number_of_prices?: number,
       name?: string,
     },
+    source?: string
 }
 type RnmStats = {
   [category: string] : Stat
@@ -111,7 +112,8 @@ const parseRnmResponse = async (url: string) => {
           rnmStats[rnmCategoryInfo.category] = {
             price_per: rnmCategoryInfo.price_per,
             regular: {average_price: 0},
-            organic: {average_price: 0}
+            organic: {average_price: 0},
+            source: url
           }
         }
         if (rnmCategoryInfo.organic) {
@@ -138,7 +140,10 @@ const getPriceStat = async (rnmStats: RnmStats, category_tag: string, category_n
     category_tag: category_tag,
     category_name: category_name,
     emoji: emoji,
-    rnm: rnmStats[category_tag],
+    rnm: rnmStats[category_tag] || {
+      regular: {average_price: 0},
+      organic: {average_price: 0},
+    },
     open_price: await fetchCategoryStat(category_tag)
   }
   return priceStat
@@ -151,14 +156,20 @@ export const getStaticProps = (async (context) => {
   // // pricesStats.push(await getPriceStat(rnmStats, "en:beet", "Betterave", '🟣'))
   // // pricesStats.push(await getPriceStat(rnmStats, "en:endives", "Endives", '☘'))
   pricesStats.push(await getPriceStat(rnmStats, "en:cucumbers", "Concombres", '🥒'))
+  pricesStats.push(await getPriceStat(rnmStats, "en:leeks", "Poireaux", '🥬'))
+  pricesStats.push(await getPriceStat(rnmStats, "en:onions", "Oignons", '🧅'))
+  pricesStats.push(await getPriceStat(rnmStats, "en:garlic", "Ail", '🧄'))
   pricesStats.push(await getPriceStat(rnmStats, "en:tomatoes", "Tomates", '🍅'))
   pricesStats.push(await getPriceStat(rnmStats, "en:apples", "Pommes", '🍎'))
   // // pricesStats.push(await getPriceStat(rnmStats, "en:citrus", "Citron", '🍋'))
   pricesStats.push(await getPriceStat(rnmStats, "en:grapes", "Raisins", '🍇'))
   pricesStats.push(await getPriceStat(rnmStats, "en:pears", "Poires", '🍐'))
-  return { props: { prices: pricesStats } }
+  pricesStats.push(await getPriceStat(rnmStats, "en:clementines", "Clémentines", '🍊'))
+  
+  return { props: { prices: pricesStats, lastUpdate: new Date().toLocaleDateString("fr-FR") } }
 }) satisfies GetStaticProps<{
-  prices: PriceStat[]
+  prices: PriceStat[],
+  lastUpdate: string
 }>
 
 function PriceCard({price}: {price: PriceStat}) {
@@ -180,7 +191,9 @@ function PriceCard({price}: {price: PriceStat}) {
       <footer className="card-footer">
         <div className="card-footer-item" style={{flexGrow: 0}}>
           <div className="tooltip">
-            <img src="/static/openprices.svg" alt="Open Prices" style={{maxWidth: "20px", height: "20px", verticalAlign: "middle"}}/> 
+            <a href={"https://prices.openfoodfacts.org/products/" + price.category_tag}>
+              <img src="/static/openprices.svg" alt="Open Prices" style={{maxWidth: "20px", height: "20px", verticalAlign: "middle"}}/> 
+            </a>
             <span className="tooltiptext">Source: Open Prices</span>
           </div>
         </div>
@@ -201,21 +214,23 @@ function PriceCard({price}: {price: PriceStat}) {
       <footer className="card-footer">
         <div className="card-footer-item" style={{flexGrow: 0}}>
           <div className="tooltip">
-            <img src="/static/rnm.png" alt="RNM" style={{maxWidth: "20px"}}/> 
+            <a href={price.rnm.source}>
+              <img src="/static/rnm.png" alt="RNM" style={{maxWidth: "20px"}}/> 
+            </a>
             <span className="tooltiptext">Source: RNM france agrimer</span>
           </div>
         </div>
         <div className="card-footer-item">
           <div className="tooltip">
             <span className="footer-price">{price.rnm.regular.average_price.toFixed(2)} € / {price.rnm.price_per === "KILOGRAM"? "kg" : "u"}</span>
-            <span className="tooltiptext">Produit utilisé: {price.rnm.regular.name}</span>
+            <span className="tooltiptext">{price.rnm.regular.name ? "Produit utilisé: " + price.rnm.regular.name : "Produit non trouvé"}</span>
           </div>
         </div>
         <div className="card-footer-item">
           <img src="/static/organic.svg" alt="Bio" style={{height: "17px", paddingRight: "7px"}}/> 
           <div className="tooltip">
             <span className="footer-price">{price.rnm.organic.average_price.toFixed(2)} € / {price.rnm.price_per === "KILOGRAM"? "kg" : "u"}</span>
-            <span className="tooltiptext">Produit utilisé: {price.rnm.organic.name}</span>
+            <span className="tooltiptext">{price.rnm.organic.name ? "Produit utilisé: " + price.rnm.organic.name : "Produit non trouvé"}</span>
           </div>
         </div>
       </footer>
@@ -224,6 +239,7 @@ function PriceCard({price}: {price: PriceStat}) {
 }
 export default function Home({
   prices,
+  lastUpdate
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
@@ -248,6 +264,21 @@ export default function Home({
           </div>
         </div>
       </section>
+      <footer className="footer">
+        <div className="content has-text-centered">
+          <p>
+            Mis à jour le {lastUpdate}. 
+          </p>
+          <p>
+            Construit à partir des données d'
+            <a href="https://prices.openfoodfacts.org/">Open Prices <img src="/static/openprices.svg" alt="Open Prices" style={{maxWidth: "20px", height: "20px", verticalAlign: "middle"}}/></a> et 
+            des bulletins <a href="https://rnm.franceagrimer.fr/prix?M2503:MARCHE">fruits</a> et <a href="https://rnm.franceagrimer.fr/prix?M2502:MARCHE">légumes</a> de <a href="https://rnm.franceagrimer.fr">France Agrimer <img src="/static/rnm.png" alt="RNM" style={{maxWidth: "20px"}}/></a>.
+          </p>
+          <p>
+            Code disponible en <a href="https://github.com/TTalex/leprixdescarottes/">open source</a>.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
