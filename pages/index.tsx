@@ -244,8 +244,36 @@ export default function Home({
   return (
     <div>
       <Head>
+        <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'/>
+        <meta name="application-name" content="Le prix des carottes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Le prix des carottes" />
+        <meta name="description" content="Un index à jour des prix des fruits et legumes de saison" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#000000" />
+
+        <link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
+
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="shortcut icon" href="/static/favicon.ico" />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:url" content="https://leprixdescarottes.fr" />
+        <meta name="twitter:title" content="Le prix des carottes" />
+        <meta name="twitter:description" content="Un index à jour des prix des fruits et legumes de saison" />
+        <meta name="twitter:image" content="https://leprixdescarottes.fr/static/android-chrome-192x192.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Le prix des carottes" />
+        <meta property="og:description" content="Un index à jour des prix des fruits et legumes de saison" />
+        <meta property="og:site_name" content="Le prix des carottes" />
+        <meta property="og:url" content="https://leprixdescarottes.fr" />
+        <meta property="og:image" content="https://leprixdescarottes.fr/static/apple-touch-icon.png" />
+
         <title>Le prix des carottes</title>
-        <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
       </Head>
       <section className="section">
         <div className="container">
