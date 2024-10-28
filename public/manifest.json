@@ -1,12 +1,18 @@
 {
-    "name": "Le prix des carottes",
-    "short_name": "leprixdescarottes",
+    "name": "Le Prix des Carottes",
+    "short_name": "Le Prix des Carottes",
+    "lang": "fr",
     "icons": [
       {
         "src": "/static/android-chrome-192x192.png",
         "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/static/android-chrome-192x192-maskable.png",
+        "sizes": "192x192",
         "type": "image/png",
-        "purpose": "any maskable"
+        "purpose": "maskable"
       },
       {
         "src": "/static/android-chrome-512x512.png",
@@ -19,8 +25,8 @@
         "type": "image/png"
       }
     ],
-    "theme_color": "#FFFFFF",
-    "background_color": "#FFFFFF",
+    "theme_color": "#14161a",
+    "background_color": "#14161a",
     "start_url": "/",
     "display": "standalone",
     "orientation": "portrait"

@@ -278,7 +278,7 @@ export default function Home({
       <section className="section">
         <div className="container">
           <h1 className="title">
-            🥕 Le prix des carottes 🥕
+            Le prix des carottes 🥕
           </h1>
           <p className="subtitle">
             Un index à jour des prix des fruits et legumes de saison.
