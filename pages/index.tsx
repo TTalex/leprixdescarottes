@@ -1,5 +1,6 @@
 
 import { rnmToCategory } from '@/utils/rnm_convert';
+import { seasonIndex } from '@/utils/season_index';
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { parse } from 'node-html-parser';
@@ -62,7 +63,7 @@ const fetchCategoryStat = async (category_tag: string) => {
   const res = await fetch(`https://prices.openfoodfacts.org/api/v1/prices?app_name=leprixdescarottes&page=1&size=50&order_by=-date&category_tag=${category_tag}&origins_tags__contains=en:france&currency=EUR`)
   const prices : PricesApi = await res.json()
   let priceStat : Stat = {
-    price_per: prices.items[0].price_per,
+    price_per: prices.items[0]?.price_per || "KILOGRAM",
     organic: {
       average_price: 0,
       total_price: 0,
@@ -88,8 +89,8 @@ const fetchCategoryStat = async (category_tag: string) => {
       priceStat.regular.total_price! += price.price
     }
   }
-  priceStat.organic.average_price = priceStat.organic.total_price! / priceStat.organic.number_of_prices!
-  priceStat.regular.average_price = priceStat.regular.total_price! / priceStat.regular.number_of_prices!
+  priceStat.organic.average_price = (priceStat.organic.total_price! / priceStat.organic.number_of_prices!) || 0
+  priceStat.regular.average_price = (priceStat.regular.total_price! / priceStat.regular.number_of_prices!) || 0
   return priceStat
 }
 
@@ -151,21 +152,9 @@ const getPriceStat = async (rnmStats: RnmStats, category_tag: string, category_n
 export const getStaticProps = (async (context) => {
   const rnmStats = await fetchRnmStats()
   let pricesStats : PriceStat[] = []
-  pricesStats.push(await getPriceStat(rnmStats, "en:carrots", "Carottes", '🥕'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:zucchini", "Courgettes", '🥒'))
-  // // pricesStats.push(await getPriceStat(rnmStats, "en:beet", "Betterave", '🟣'))
-  // // pricesStats.push(await getPriceStat(rnmStats, "en:endives", "Endives", '☘'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:cucumbers", "Concombres", '🥒'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:leeks", "Poireaux", '🥬'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:onions", "Oignons", '🧅'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:garlic", "Ail", '🧄'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:tomatoes", "Tomates", '🍅'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:apples", "Pommes", '🍎'))
-  // // pricesStats.push(await getPriceStat(rnmStats, "en:citrus", "Citron", '🍋'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:grapes", "Raisins", '🍇'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:pears", "Poires", '🍐'))
-  pricesStats.push(await getPriceStat(rnmStats, "en:clementines", "Clémentines", '🍊'))
-  
+  for (let category of seasonIndex["december"]) {
+    pricesStats.push(await getPriceStat(rnmStats, category.category, category.name, category.icon))
+  }
   return { props: { prices: pricesStats, lastUpdate: new Date().toLocaleDateString("fr-FR") } }
 }) satisfies GetStaticProps<{
   prices: PriceStat[],
