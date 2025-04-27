@@ -1,7 +1,8 @@
 type RnmToCategoryInfo = {
     category: string,
     price_per: "KILOGRAM" | "UNIT"
-    organic: boolean
+    organic: boolean,
+    factor?: number
 }
 export const rnmToCategory : {[name:string]:RnmToCategoryInfo} = {
     "POIRE Conférence France vrac": {category: "en:pears", price_per: "KILOGRAM", organic: false},
@@ -15,6 +16,18 @@ export const rnmToCategory : {[name:string]:RnmToCategoryInfo} = {
     "RAISIN blanc France biologique": {category: "en:grapes", price_per: "KILOGRAM", organic: true},
     "CLÉMENTINE Corse cdt": {category: "en:clementines", price_per: "KILOGRAM", organic: false},
     "CLÉMENTINE France biologique": {category: "en:clementines", price_per: "KILOGRAM", organic: true},
+    "BANANE France vrac": {category: "en:bananas", price_per: "KILOGRAM", organic: false},
+    "FRAISE France biologique": {category: "en:strawberries", price_per: "KILOGRAM", organic: true},
+    "FRAISE standard France barq.500g": {category: "en:strawberries", price_per: "KILOGRAM", organic: false},
+    "KIWI vert France cdt 1kg": {category: "en:kiwi", price_per: "KILOGRAM", organic: false},
+    "ABRICOT France biologique (le kg)": {category: "en:apricots", price_per: "KILOGRAM", organic: true},
+    "ABRICOT France 45-50mm vrac (le kg)": {category: "en:apricots", price_per: "KILOGRAM", organic: false},
+    "CERISE rouge France barq. (le kg)": {category: "en:cherries", price_per: "KILOGRAM", organic: false},
+    "FRAMBOISE France barq.125g (le kg)": {category: "en:raspberries", price_per: "KILOGRAM", organic: false},
+    "MARRON CHATAIGNE France vrac (le kg)": {category: "en:chestnuts", price_per: "KILOGRAM", organic: false},
+    "NECTARINE chair jaune France A-AA vrac (le kg)": {category: "en:nectarines", price_per: "KILOGRAM", organic: false},
+    "PÊCHE chair jaune France cal. autre ou inconnu vrac (le kg)": {category: "en:peaches", price_per: "KILOGRAM", organic: false},
+    "PRUNE verte autre ou inconnue France vrac (le kg)": {category: "en:plums", price_per: "KILOGRAM", organic: false},
 
     "CAROTTE France lavée biologique": {category: "en:carrots", price_per: "KILOGRAM", organic: true},
     "CAROTTE France lavée vrac": {category: "en:carrots", price_per: "KILOGRAM", organic: false},
@@ -37,5 +50,12 @@ export const rnmToCategory : {[name:string]:RnmToCategoryInfo} = {
     "POMME DE TERRE de conservation France vrac": {category: "en:potatoes", price_per: "KILOGRAM", organic: false},
     "POMME DE TERRE France biologique": {category: "en:potatoes", price_per: "KILOGRAM", organic: true},
     "ENDIVE France vrac": {category: "en:endives", price_per: "KILOGRAM", organic: false},
-    "BANANE France vrac": {category: "en:bananas", price_per: "KILOGRAM", organic: false},
+    "ARTICHAUT Globuleux France (la pièce)": {category: "en:artichoke", price_per: "UNIT", organic: false},
+    'ASPERGE "autre que verte" France +16 mm vrac': {category: "en:asparagus", price_per: "KILOGRAM", organic: false},
+    "AUBERGINE violette France vrac": {category: "en:eggplant", price_per: "KILOGRAM", organic: false},
+    "LAITUE Batavia France (la pièce)": {category: "en:lettuce", price_per: "UNIT", organic: false},
+    "TOMATE cerise France biologique": {category: "en:cherry-tomatoes", price_per: "KILOGRAM", organic: true},
+    "TOMATE cerise allongée rouge France barq.250g": {category: "en:cherry-tomatoes", price_per: "KILOGRAM", organic: false},
+    "MELON Charentais France biologique (la pièce)": {category: "en:melons", price_per: "UNIT", organic: true},
+    "MELON Charentais jaune France 750-1250g (la pièce)": {category: "en:melons", price_per: "UNIT", organic: false},
 }

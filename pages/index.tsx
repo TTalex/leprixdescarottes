@@ -152,7 +152,7 @@ const getPriceStat = async (rnmStats: RnmStats, category_tag: string, category_n
 export const getStaticProps = (async (context) => {
   const rnmStats = await fetchRnmStats()
   let pricesStats : PriceStat[] = []
-  for (let category of seasonIndex["december"]) {
+  for (let category of seasonIndex["may"]) {
     pricesStats.push(await getPriceStat(rnmStats, category.category, category.name, category.icon))
   }
   return { props: { prices: pricesStats, lastUpdate: new Date().toLocaleDateString("fr-FR") } }
