@@ -67,5 +67,41 @@ export const seasonIndex : {[name:string]:CategoryIndex[]} = {
     {category: "en:apples", name: "Pommes", icon: '🍏'},
     {category: "en:gala-apples", name: "Pommes Gala", icon: '🍎'},
     {category: "en:golden-delicious-apples", name: "Pommes Golden", icon: '🍏'},
+  ],
+  "july": [
+    {category: "en:garlic", name: "Ail", icon: '🧄'},
+    {category: "en:artichoke", name: "Artichauts", icon: '🥦'},
+    {category: "en:asparagus", name: "Asperges", icon: '🌿'},
+    {category: "en:eggplant", name: "Aubergines", icon: '🍆'},
+    {category: "en:beet", name: "Betterave", icon: '🟣'}, // no match rnm
+    {category: "en:broccoli", name: "Brocoli", icon: '🥦'}, // no match rnm
+    {category: "en:carrots", name: "Carottes", icon: '🥕'},
+    {category: "en:cucumbers", name: "Concombres", icon: '🥒'},
+    {category: "en:zucchini", name: "Courgettes", icon: '🥒'},
+    {category: "en:spinach", name: "Épinards", icon: '🥬'}, // no match rnm
+    {category: "en:lettuce", name: "Laitue", icon: '🥗'},
+    {category: "en:onions", name: "Oignons", icon: '🧅'},
+    {category: "en:potatoes", name: "Patates", icon: '🥔'},
+    {category: "en:radishes", name: "Radis", icon: '🌱'}, // no match rnm
+
+    {category: "en:apricots", name: "Abricots", icon: '🍑'},
+    // amandes
+    {category: "en:cherries", name: "Cerises", icon: '🍒'},
+    {category: "en:strawberries", name: "Fraises", icon: '🍓'},
+    {category: "en:raspberries", name: "Framboises", icon: '🍓'},
+    {category: "en:redcurrants", name: "Groseilles", icon: '🍓'}, // no match rnm
+    {category: "en:melons", name: "Melons", icon: '🍈'},
+    {category: "en:blueberries", name: "Myrtilles", icon: '🫐'}, // no match rnm
+    {category: "en:nectarines", name: "Nectarines", icon: '🍑'},
+    {category: "en:watermelons", name: "Pasteques", icon: '🍉'},// no match rnm
+    {category: "en:peaches", name: "Pêches", icon: '🍑'},
+    {category: "en:pears", name: "Poires", icon: '🍐'},
+    {category: "en:plums", name: "Prunes", icon: '🍑'},
+    {category: "en:tomatoes", name: "Tomates", icon: '🍅'},
+    {category: "en:cherry-tomatoes", name: "Tomates Cerises", icon: '🍅'},
+    // rhubarb
+    {category: "en:apples", name: "Pommes", icon: '🍏'},
+    {category: "en:gala-apples", name: "Pommes Gala", icon: '🍎'},
+    {category: "en:golden-delicious-apples", name: "Pommes Golden", icon: '🍏'},
   ]
 };
